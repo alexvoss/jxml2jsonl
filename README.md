@@ -56,16 +56,23 @@ So, how fast does this go? **TODO**
 
 The basic usage of the tool is fairly straightforward. It reads input either from a given input file
 or from standard input. Likewise, it writes to standard output by default but this can be changed
-by passing a suitable filename on the command line. The 
+by passing a suitable filename on the command line. This means that `xml2jsonl` can work as a filter
+like so: `bzcat large_file.xml | xml2jsonl | bzip2 > output.jsonl`.
+
+By default, `xml2jsonl` processes all child objects of the root
+object. The `--tags` argument can be used to specify the tag names of
+the elements that should be processed. A user-specified filter
+function can be provided with `--filter` to reduce the output to only
+the data needed and to transform the objects (see below).
 
 ```
---name <element name(s)>  the tag name(s) of elements to be extracted from the 
-                          XML document parsed. If none are provided then all
-                          child elements of the root element are processed.
 --input <filename>        provides an input file to read from. The default is to 
                           read from standad input.
 --output <filename>       provides an output file to write to. The default is to 
                           write to standard output.
+--tags <element name(s)>  the tag name(s) of elements to be extracted from the 
+                          XML document parsed. If none are provided then all
+                          child elements of the root element are processed.
 --filter <js file>        the name of a Javascript module to load via require; 
                           must export a filter() function.
 ```
