@@ -1,0 +1,31 @@
+{
+  "name": "xml2jsonl",
+  "homepage": "https://github.com/alexvoss/xml2jsonl",
+  "version": "0.1",
+  "description": "tool to convert larger, repetitive XML documents to JSONL",
+  "keywords": [
+    "xml",
+    "jsonl",
+    "convert",
+    "filter"
+  ],
+  "bugs": "https://github.com/alexvoss/xml2jsonl/issues",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha tests/index.js"
+  },
+  "author": {
+    "name": "Alex Voss",
+    "email": "alex@corealisation.com",
+    "url": "https://www.corealisation.com/alex"
+  },
+  "funding": {},
+  "license": "Apache-2.0",
+  "dependencies": {
+    "node-expat": "^2.4.0",
+    "yargs": "^17.0.1"
+  },
+  "devDependencies": {
+    "mocha": "^9.0.1"
+  }
+}
