@@ -75,6 +75,8 @@ the data needed and to transform the objects (see below).
                           child elements of the root element are processed.
 --filter <js file>        the name of a Javascript module to load via require; 
                           must export a filter() function.
+--root                    process the root element as well (to create
+                          a single JSON object)
 ```
 
 
