@@ -27,6 +27,37 @@ look for matches against a regular expression or might use a MediaWiki parser to
 content of each article and make decisions, for example, based on the presence of tags. It could
 also delete attributes from the data that are superfluous or transform the data in any way, really.
 
+## Unique versus non-unique elements
+
+In XML, elements can be repeated any number of times. A
+straightforward translation into JSON is to store child nodes as
+arrays be default. This is the approach taken by `xml2json`. The JSON
+produced looks like this:
+
+```json
+{
+  't': 'tagname', 
+  'a': {<attributes>},
+  'c': [<child_nodes],
+  'x': 'text content'
+}
+```
+
+Each information-carrying part of an XML element is mapped to an
+attribute in the object. The XML attributes are mapped to a JSON
+object since attributes in XML cannot repeat. Child elements, however,
+can and so the child nodes are mapped to an array.
+
+Now, this representation is not terribly convenient to work with. One 
+solution would have been to create an alternative representation that 
+assumes non-repeating elements. However, there will be cases where *some* 
+of the elements are repeating and some are not. 
+
+As a consequence, *prettifying* the generated JSON is left to the
+application-specific filters that can be applied before data gets
+written out to disk. Examples of these are included in the `examples`
+folder.
+
 ## Limitations
 
 The tool does not support XML documents that contain mixed content models, sorry. It is not easy to
