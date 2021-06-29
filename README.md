@@ -46,7 +46,10 @@ produced looks like this:
 Each information-carrying part of an XML element is mapped to an
 attribute in the object. The XML attributes are mapped to a JSON
 object since attributes in XML cannot repeat. Child elements, however,
-can and so the child nodes are mapped to an array.
+can and so the child nodes are mapped to an array. Also, note that tag
+names and attribute names can collide, so the element's tag name, its
+attribute and the tag names of its children need to be in separate
+attributes.
 
 Now, this representation is not terribly convenient to work with. One 
 solution would have been to create an alternative representation that 
