@@ -141,6 +141,6 @@ describe('processor', function() {
 
     let json = outputStream.write.getCall(0).args[0]
     console.log(json)
-    expect(json.c[0].c[0]).to.equal('Hi!')
+    expect(json.c[0].x[0]).to.equal('Hi!')
   })
 })
