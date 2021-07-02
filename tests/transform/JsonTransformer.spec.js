@@ -24,38 +24,37 @@ const assert = require('assert'),
       sinon = require('sinon').createSandbox(),
       expect = chai.expect,
       stream = require('stream'),
-      processor = require('../../lib/processor')
+      JsonTransformer = require('../../lib/transform/JsonTransformer').JsonTransformer
 ;
 
 chai.use(require('sinon-chai'))
 
-const json1 = 
-{t: 'root',
-  a: {
-    b: 'b',
-    c: 'c'
-  },
-  c: [
-    
-  ]
- }
-
-describe('SimplifyUniqueTransformer', function() {
+describe('JsonTransformer', function() {
 
   let outputStream
-  let inputStream
+  let jsonTransformer
 
   beforeEach(function() {
     outputStream = {write: sinon.spy()}
+    jsonTransformer = new JsonTransformer()
   })
 
   afterEach(function(){
     sinon.restore()
   })
 
-  it('moves children to top if unique', async function() {
-    [json1]
+  it("turns an empty object into '{}'", async function() {
+    jsonTransformer.write({})
+    let result = jsonTransformer.read()
+    expect(result).to.equal('{}')
+  })
 
+  it("turns a complex object into JSON string", async function() {
+    obj = {a:1,b:{c:2}}
+    jsonTransformer.write(obj)
+    let str = jsonTransformer.read()
+    let result = JSON.parse(str)
+    expect(result).to.deep.equal(obj)
   })
 
 })

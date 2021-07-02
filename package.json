@@ -13,7 +13,7 @@
   "main": "index.js",
   "scripts": {
     "xml2json": "node lib/index.js",
-    "test": "mocha tests/processor.js",
+    "test": "mocha tests tests/transform",
     "debugtest": "mocha --inspect-brk tests/processor.js"
   },
   "author": {
