@@ -24,7 +24,7 @@ const assert = require('assert'),
       sinon = require('sinon').createSandbox(),
       expect = chai.expect,
       stream = require('stream'),
-      processor = require('../lib/processor')
+      Xml2JsonlProcessor = require('../lib/Xml2JsonlProcessor').Xml2JsonlProcessor
 ;
 
 chai.use(require('sinon-chai'))
@@ -37,7 +37,7 @@ const doc1 =
 </root>
 `
 
-describe('processor', function() {
+describe('Xml2JsonlProcessor', function() {
 
   let outputStream
   let inputStream
@@ -55,13 +55,15 @@ describe('processor', function() {
 
   it('skips root when procroot is false', async function() {
 
-    await processor.processXml({
+    let processor = new Xml2JsonlProcessor({
       inputStream: inputStream,
       outputStream: outputStream, 
       tags: null, 
       filter: null, 
       procroot: false
     })
+
+    await processor.process()
 
     if(outputStream.called) {
       let json = outputStream.write.getCall(0).args[0]
@@ -71,13 +73,15 @@ describe('processor', function() {
 
   it('processes root when procroot is true', async function() {
 
-    await processor.processXml({
+    let processor = new Xml2JsonlProcessor({
       inputStream: inputStream,
       outputStream: outputStream, 
       tags: null, 
       filter: null, 
       procroot: true
     })
+
+    await processor.process()
 
     expect(outputStream.write.called).to.be.true
     let json = outputStream.write.getCall(0).args[0]
@@ -87,7 +91,7 @@ describe('processor', function() {
 
   it('ignores elements not specified in tags', async function() {
     
-    await processor.processXml({
+    let processor = new Xml2JsonlProcessor({
       inputStream: inputStream,
       outputStream: outputStream, 
       tags: [], 
@@ -95,18 +99,22 @@ describe('processor', function() {
       procroot: false
     })
 
+    await processor.process()
+
     expect(outputStream.write.callCount).to.equal(0)
   })
 
   it('extracts elements specified in tags', async function() {
 
-    await processor.processXml({
+    let processor = new Xml2JsonlProcessor({
       inputStream: inputStream,
       outputStream: outputStream, 
       tags: ['b'], 
       filter: null, 
       procroot: false
     })
+
+    await processor.process()
 
     expect(outputStream.write.called).to.be.true
     let json = outputStream.write.getCall(0).args[0]
@@ -116,13 +124,15 @@ describe('processor', function() {
 
   it('processes child elements of elements to be included', async function() {
 
-    await processor.processXml({
+    let processor = new Xml2JsonlProcessor({
       inputStream: inputStream,
       outputStream: outputStream, 
       tags: ['b'], 
       filter: null, 
       procroot: false
     })
+
+    await processor.process()
 
     expect(outputStream.write.called).to.be.true
     let json = outputStream.write.getCall(0).args[0]
@@ -131,13 +141,15 @@ describe('processor', function() {
 
   it('processes text content in elements', async function() {
 
-    await processor.processXml({
+    let processor = new Xml2JsonlProcessor({
       inputStream: inputStream,
       outputStream: outputStream, 
       tags: ['b'], 
       filter: null, 
       procroot: false
     })
+
+    await processor.process()
 
     let json = outputStream.write.getCall(0).args[0]
     console.log(json)
