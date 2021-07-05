@@ -110,4 +110,24 @@ describe('SimplifyUniqueTransformer', function() {
     expect(result.child1.hasOwnProperty('t')).to.be.false
   })
 
+  it('turns XML attribute into property if there is no name clash', async function() {
+
+    let trans = new SimplifyUniqueTransformer()
+    trans.pipe(outputStream)
+    trans.write(JSON.parse(json1))
+    trans.end()
+    
+    await new Promise((resolve, reject) => {
+      stream.finished(trans, (err) => {
+        resolve()
+      })
+    })
+
+    let result = outputStream.write.getCall(0).args[0]
+    console.log(json1)
+    console.log(result)
+    expect(result).to.not.be.null
+    expect(result.hasOwnProperty('b')).to.be.true
+  })
+
 })
