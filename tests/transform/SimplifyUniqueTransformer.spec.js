@@ -30,14 +30,15 @@ const assert = require('assert'),
 chai.use(require('sinon-chai'))
 
 const json1 = JSON.stringify(
-{t: 'root',
-  a: {
+{
+  __t: 'root',
+  __a: {
     b: 'b',
     c: 'c'
   },
-  c: [
-    {t: 'child1', a: { attr1: 'val1'}},
-    {t: 'child2', a: { attr1: 'val1'}}
+  __c: [
+    {__t: 'child1', __a: { attr1: 'val1'}},
+    {__t: 'child2', __a: { attr1: 'val1'}}
   ]
  })
 
@@ -68,8 +69,6 @@ describe('SimplifyUniqueTransformer', function() {
     })
 
     let result = outputStream.write.getCall(0).args[0]
-    console.log(json1)
-    console.log(result)
     expect(result).to.not.be.null
     expect(result.child1).to.not.be.null
   })
@@ -89,7 +88,7 @@ describe('SimplifyUniqueTransformer', function() {
 
     let result = outputStream.write.getCall(0).args[0]
     expect(result).to.not.be.null
-    expect(result.hasOwnProperty('c')).to.be.false
+    expect(result.hasOwnProperty('__c')).to.be.false
   })
 
   it('removes t property from child if turned into property', async function() {
@@ -107,7 +106,7 @@ describe('SimplifyUniqueTransformer', function() {
 
     let result = outputStream.write.getCall(0).args[0]
     expect(result).to.not.be.null
-    expect(result.child1.hasOwnProperty('t')).to.be.false
+    expect(result.child1.hasOwnProperty('__t')).to.be.false
   })
 
   it('turns XML attribute into property if there is no name clash', async function() {
@@ -124,8 +123,6 @@ describe('SimplifyUniqueTransformer', function() {
     })
 
     let result = outputStream.write.getCall(0).args[0]
-    console.log(json1)
-    console.log(result)
     expect(result).to.not.be.null
     expect(result.hasOwnProperty('b')).to.be.true
   })

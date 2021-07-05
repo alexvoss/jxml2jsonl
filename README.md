@@ -36,10 +36,10 @@ produced looks like this:
 
 ```javascript
 {
-  't': 'tagname', 
-  'a': {<attributes>},
-  'c': [<child_nodes],
-  'x': 'text content'
+  '__t': 'tagname', 
+  '__a': {<attributes>},
+  '__c': [<child_nodes],
+  '__x': 'text content'
 }
 ```
 

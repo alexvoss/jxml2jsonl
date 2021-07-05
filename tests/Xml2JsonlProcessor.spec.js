@@ -67,7 +67,7 @@ describe('Xml2JsonlProcessor', function() {
 
     if(outputStream.called) {
       let json = outputStream.write.getCall(0).args[0]
-      expect(json.t).to.not.equal('root')
+      expect(json.__t).to.not.equal('root')
     }
   })
 
@@ -85,8 +85,8 @@ describe('Xml2JsonlProcessor', function() {
 
     expect(outputStream.write.called).to.be.true
     let json = outputStream.write.getCall(0).args[0]
-    expect(json.t).to.equal('root')
-    expect(json.a.len).to.equal('2')
+    expect(json.__t).to.equal('root')
+    expect(json.__a.len).to.equal('2')
   })
 
   it('ignores elements not specified in tags', async function() {
@@ -118,8 +118,8 @@ describe('Xml2JsonlProcessor', function() {
 
     expect(outputStream.write.called).to.be.true
     let json = outputStream.write.getCall(0).args[0]
-    expect(json.t).to.equal('b')
-    expect(json.a.attr).to.equal('b')
+    expect(json.__t).to.equal('b')
+    expect(json.__a.attr).to.equal('b')
   })
 
   it('processes child elements of elements to be included', async function() {
@@ -136,7 +136,7 @@ describe('Xml2JsonlProcessor', function() {
 
     expect(outputStream.write.called).to.be.true
     let json = outputStream.write.getCall(0).args[0]
-    expect(json.c.c).to.not.be.null
+    expect(json.__c.__c).to.not.be.null
   })
 
   it('processes text content in elements', async function() {
@@ -152,7 +152,6 @@ describe('Xml2JsonlProcessor', function() {
     await processor.process()
 
     let json = outputStream.write.getCall(0).args[0]
-    console.log(json)
-    expect(json.c[0].x).to.equal('Hi!')
+    expect(json.__c[0].__x).to.equal('Hi!')
   })
 })
