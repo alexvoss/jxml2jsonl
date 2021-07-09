@@ -1,0 +1,63 @@
+<mediawiki xmlns="http://www.mediawiki.org/xml/export-0.10/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mediawiki.org/xml/export-0.10/ http://www.mediawiki.org/xml/export-0.10.xsd" version="0.10" xml:lang="en">
+  <siteinfo>
+    <sitename>Wikipedia</sitename>
+    <dbname>enwiki</dbname>
+    <base>https://en.wikipedia.org/wiki/Main_Page</base>
+  </siteinfo>
+  <page>
+    <title>Harry Potter</title>
+    <ns>0</ns>
+    <id>01010101</id>
+    <revision>
+      <id>010101010</id>
+      <timestamp>2011-06-16T09:12:49Z</timestamp>
+      <contributor>
+        <username>ProfMcGonagall</username>
+        <id>10101010</id>
+      </contributor>
+      <comment>Summary</comment>
+      <model>wikitext</model>
+      <format>text/x-wiki</format>
+      <text xml:space="preserve">
+        An extraordinary wizard.
+      </text>
+      <sha1>1234567891234567891234567891234</sha1>
+    </revision>
+  </page>
+  <page>
+    <title>Albus Dumbledore</title>
+    <ns>0</ns>
+    <id>11111111</id>
+    <revision>
+      <id>111111110</id>
+      <timestamp>2011-06-16T09:12:49Z</timestamp>
+      <contributor>
+        <username>ProfMcGonagall</username>
+        <id>10101010</id>
+      </contributor>
+      <comment>Summary</comment>
+      <model>wikitext</model>
+      <format>text/x-wiki</format>
+      <text xml:space="preserve">
+        Dumbledore smokes weed.
+      </text>
+      <sha1>1010101010101010101010101010101</sha1>
+    </revision>
+    <revision>
+      <id>111111111</id>
+      <parentid>111111110</parentid>
+      <timestamp>2011-06-17T08:10:13Z</timestamp>
+      <contributor>
+        <username>Albus</username>
+        <id>01010101</id>
+      </contributor>
+      <minor />
+      <model>wikitext</model>
+      <format>text/x-wiki</format>
+      <text xml:space="preserve">
+        Dumbledoes does not smoke weed. Never heard of the stuff.
+      </text>
+      <sha1>0101010101010101010101010101010</sha1>
+    </revision>
+  </page>
+</mediawiki>
