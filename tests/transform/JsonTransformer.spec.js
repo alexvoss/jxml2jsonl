@@ -24,7 +24,7 @@ const assert = require('assert'),
       sinon = require('sinon').createSandbox(),
       expect = chai.expect,
       stream = require('stream'),
-      JsonTransformer = require('../../lib/transform/JsonTransformer').JsonTransformer
+      JsonTransformer = require('../../lib/transform/JsonTransformer')
 ;
 
 chai.use(require('sinon-chai'))

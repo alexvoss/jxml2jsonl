@@ -24,7 +24,7 @@ const assert = require('assert'),
       sinon = require('sinon').createSandbox(),
       expect = chai.expect,
       stream = require('stream'),
-      SimplifyUniqueTransformer = require('../../lib/transform/SimplifyUniqueTransformer').SimplifyUniqueTransformer
+      SimplifyUniqueTransformer = require('../../lib/transform/SimplifyUniqueTransformer')
 ;
 
 chai.use(require('sinon-chai'))

@@ -25,8 +25,8 @@ const assert = require('assert'),
       expect = chai.expect,
       stream = require('stream'),
       fs = require('fs'),
-      Xml2JsonlProcessor = require('../../lib/Xml2JsonlProcessor').Xml2JsonlProcessor
-      SimplifyUniqueTransformer = require('../../lib/transform/SimplifyUniqueTransformer').SimplifyUniqueTransformer
+      Xml2JsonlProcessor = require('../../lib/Xml2JsonlProcessor')
+      SimplifyUniqueTransformer = require('../../lib/transform/SimplifyUniqueTransformer')
 ;
 
 chai.use(require('sinon-chai'))
@@ -79,7 +79,7 @@ describe('Xml2JsonlProcessor', function() {
   it('multiple revisions are array', async function() {
     await processor.process()
     let json = outputStream.write.getCall(2).args[0]
-    console.log(json)
+    //console.log(JSON.stringify(json, null, 2))
     expect(json.revision instanceof Array).to.be.true;
   })
 

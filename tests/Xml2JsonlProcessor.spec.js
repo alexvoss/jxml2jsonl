@@ -24,7 +24,7 @@ const assert = require('assert'),
       sinon = require('sinon').createSandbox(),
       expect = chai.expect,
       stream = require('stream'),
-      Xml2JsonlProcessor = require('../lib/Xml2JsonlProcessor').Xml2JsonlProcessor
+      Xml2JsonlProcessor = require('../lib/Xml2JsonlProcessor')
 ;
 
 chai.use(require('sinon-chai'))
