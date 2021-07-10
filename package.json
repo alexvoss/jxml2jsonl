@@ -14,7 +14,8 @@
   "scripts": {
     "xml2json": "node lib/index.js",
     "test": "mocha tests tests/transform",
-    "debugtest": "mocha --inspect-brk tests/processor.js"
+    "debugtest": "mocha --inspect-brk tests/processor.js",
+    "acceptance": "mocha tests/acceptance"
   },
   "author": {
     "name": "Alex Voss",
