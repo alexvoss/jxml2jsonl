@@ -58,13 +58,20 @@ of the elements are repeating and some are not.
 
 As a consequence, *prettifying* the generated JSON is left to the
 application-specific filters that can be applied before data gets
-written out to disk. Examples of these are included in the `examples`
-folder.
+written out to disk. The `SimplifyUniqueTransformer` class provides 
+functionality to simplify the format while checking that there 
+are no clashes. This may work out of the box for a given dataset or
+may need to be adapted.
 
 ## Limitations
 
 The tool does not support XML documents that contain mixed content models, sorry. It is not easy to
 represent a mixed content model in JSON, though I bet it is not impossible.
+
+Another limitation is that the ordering of elements is not preserved.
+Depending on ordering is common in document-oriented uses of XML that
+involve mixed content models but not in uses of XML to represent more
+structured data.
 
 ## Performance
 
