@@ -3,11 +3,13 @@
 Xml2jsonl is a utility to convert large XML files into files with one JSON object per line, allowing
 the data to be filtered on the way.
 
-This can be useful when working with large datasets that come as one big XML file but contain
-repeated elements that are of interest. There are plenty of examples of datasets published as 
-very large XML documents. One notorious example is the [Wikipedia data
-dump](https://dumps.wikimedia.org/backup-index.html) files. These data files will be used as a
-running example in the description below.
+This can be useful when working with large datasets that come as one
+big XML file but contain repeated elements that are of interest. There
+are plenty of examples of datasets published as very large XML
+documents. Notorious examples are the [Wikipedia data
+dumps](https://dumps.wikimedia.org/backup-index.html) or the
+[Stack Exchange data
+dumps](https://archive.org/details/stackexchange). 
 
 Converting to JSONL files before trying to work with such files has the following advantages:
 
@@ -20,12 +22,11 @@ Converting to JSONL files before trying to work with such files has the followin
   form of libraries that need to be made available as dependencies.
 * **I will need to check performance!**
 
-An additional function this tool serves is to enable filtering of the data, so that subsets of the
-elements can be created. The tool can call a user-defined function for every object that is read.
-This function can filter or transform the data to be written to the output  For example, it could
-look for matches against a regular expression or might use a MediaWiki parser to parse the text
-content of each article and make decisions, for example, based on the presence of tags. It could
-also delete attributes from the data that are superfluous or transform the data in any way, really.
+An additional function this tool serves is to enable filtering of the
+data, so that subsets of the elements can be created. The tool can
+call a user-defined function for every object that is read.  This
+function can filter the data to be written to the output or can
+transform it by removing properties that are not required.
 
 ## Unique versus non-unique elements
 
@@ -56,17 +57,17 @@ solution would have been to create an alternative representation that
 assumes non-repeating elements. However, there will be cases where *some* 
 of the elements are repeating and some are not. 
 
-As a consequence, *prettifying* the generated JSON is left to the
-application-specific filters that can be applied before data gets
-written out to disk. The `SimplifyUniqueTransformer` class provides 
-functionality to simplify the format while checking that there 
-are no clashes. This may work out of the box for a given dataset or
-may need to be adapted.
+As a consequence, *prettifying* the generated JSON is left to filters
+that can be applied before data gets written out to disk. The
+`SimplifyUniqueTransformer` class provides functionality to simplify
+the format while checking that there are no clashes. This may work out
+of the box for a given dataset or may need to be adapted.
 
 ## Limitations
 
-The tool does not support XML documents that contain mixed content models, sorry. It is not easy to
-represent a mixed content model in JSON, though I bet it is not impossible.
+The tool does not support XML documents that contain mixed content
+models, sorry. It is not easy to represent a mixed content model in
+JSON, though I bet it is not impossible.
 
 Another limitation is that the ordering of elements is not preserved.
 Depending on ordering is common in document-oriented uses of XML that
@@ -85,13 +86,6 @@ code.
 As it stands, the code does not make use of worker threads. There is not much to be gained for the
 sorts of things the tool itself does. The user-defined function can, of course, be implemented to
 make use of workers if this makes sense for the operations to be performed. 
-
-Likewise, it does not implement asynchronous IO since doing so runs the risk that the input side
-is much faster than the output side (which might pipe into a compression algorithm, for example),
-leading to excessive memory use. Any counter-measures would risk the advantage of asynchronous IO
-being negated. 
-
-So, how fast does this go? **TODO**
 
 ## Usage
 
@@ -127,5 +121,9 @@ the data needed and to transform the objects (see below).
 
 ## Testing
 
-The code comes with a range of unit tests written with [Mocha](https://mochajs.org/). They can be
-run using `npm test`. The tests are run routinely on (Jenkins? **TODO**)
+The code comes with a range of unit tests written with
+[Mocha](https://mochajs.org/). They can be run using `npm test`. A
+number of acceptance tests can be run using `npm run acceptance`.
+These are potentially longer running and work with more complex data.
+
+The tests are run routinely on (Jenkins? GitHub Actions? **TODO**)
