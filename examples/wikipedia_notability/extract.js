@@ -27,7 +27,7 @@
  * notability of the subject.
  */
 
-let wtf = require('wtf_wikipedia')  // https://github.com/spencermountain/wtf_wikipedia
+//let wtf = require('wtf_wikipedia')  // https://github.com/spencermountain/wtf_wikipedia
 let Xml2JsonlProcessor = require('../../lib/Xml2JsonlProcessor')
 let SimplifyUniqueTransformer = require('../../lib/transform/SimplifyUniqueTransformer')
 let FilterTransformer = require('../../lib/transform/FilterTransformer')
@@ -52,7 +52,12 @@ let filterTransformer = new FilterTransformer(obj => {
     if(!revision.text.__x) {
       return false
     }
-    if(revision.text.__x.match(/{{Notability/g)) return true
+    if(revision.text.__x.match(/{{[Nn]otability/g)
+      ||revision.text.__x.match(/{{[Nn]onnotable/g)
+      ||revision.text.__x.match(/{{N[Nn]/g)
+    ) {
+      return true
+    }
   }
   return false
 })
