@@ -46,7 +46,7 @@ describe('JsonTransformer', function() {
   it("turns an empty object into '{}'", async function() {
     jsonTransformer.write({})
     let result = jsonTransformer.read()
-    expect(result).to.equal('{}')
+    expect(result.trim()).to.equal('{}')
   })
 
   it("turns a complex object into JSON string", async function() {
