@@ -27,11 +27,41 @@
  * notability of the subject.
  */
 
+const { Transform } = require('stream');
 //let wtf = require('wtf_wikipedia')  // https://github.com/spencermountain/wtf_wikipedia
-let Xml2JsonlProcessor = require('../../lib/Xml2JsonlProcessor')
-let SimplifyUniqueTransformer = require('../../lib/transform/SimplifyUniqueTransformer')
-let FilterTransformer = require('../../lib/transform/FilterTransformer')
-let JsonTransformer = require('../../lib/transform/JsonTransformer')
+const Xml2JsonlProcessor = require('../../lib/Xml2JsonlProcessor')
+const SimplifyUniqueTransformer = require('../../lib/transform/SimplifyUniqueTransformer')
+const FilterTransformer = require('../../lib/transform/FilterTransformer')
+const JsonTransformer = require('../../lib/transform/JsonTransformer')
+
+class TextSimplifyTransformer extends Transform {
+  constructor() {
+    super({objectMode: true})
+  }
+  
+  _transform = function(object, encoding, callback) {
+    for(revision of object.revision) {
+      if(revision.__x) {
+        delete revision.__x
+      }
+      revision.text = revision.text.__x
+    }
+    this.removeEmptyText(object)
+    callback(null, object)
+  }
+
+  removeEmptyText(object) {
+    if(object.__x && object.__x.trim() == "") {
+      delete object.__x
+    }
+    let props = Object.getOwnPropertyNames(object)
+    for(let prop of props) {
+      if(object[prop] instanceof Object) {
+        this.removeEmptyText(object[prop])
+      }
+    }
+  }
+}
 
 // we are running this as a filter, largely because input comes from bzip2 compressed
 // files and these are better decompressed using a separate bzcat process
@@ -63,8 +93,11 @@ let filterTransformer = new FilterTransformer(obj => {
 })
 pipeline.pipe(filterTransformer)
 
+let textTransformer = new TextSimplifyTransformer()
+filterTransformer.pipe(textTransformer)
+
 let jsonTransformer = new JsonTransformer()
-filterTransformer.pipe(jsonTransformer)
+textTransformer.pipe(jsonTransformer)
 
 jsonTransformer.pipe(process.stdout)
 
