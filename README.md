@@ -74,6 +74,19 @@ Depending on ordering is common in document-oriented uses of XML that
 involve mixed content models but not in uses of XML to represent more
 structured data.
 
+### Object Size
+
+Because the tool uses `JSON.stringify()` to turn objects into
+JSON-encoded strings, it inherits any limitations of this function. 
+There does seem to be a limit to how large the individual objects in
+the processing pipeline can get before a `RangeError` is thrown. One 
+limitation is the heap space available to Node.js and the other seems 
+to be a [limitation on the
+length of a String](https://stackoverflow.com/questions/44533966/v8-node-js-increase-max-allowed-string-length).
+
+The heap size can be expanded using the `--max-old-space-size`
+[documentation](https://nodejs.org/api/cli.html#cli_max_old_space_size_size_in_megabytes) option. It seems, though, that the maximum string length is [hard-coded into V8, so Node.js inherits this](https://github.com/nodejs/node/issues/33960). Version 12 of Node.js seems to have a higher limit than either the current latest versions (16) or the current LTS versions (14), so it is best to use these if the object size is an issue. (On a 32 bit system, the limit is lower than on a 64 bit system, so I would not recommend using one of these.)
+
 ## Performance
 
 This tool is written in JavaScript for [Node.js](https://nodejs.org). There is a specific reason for
