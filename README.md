@@ -1,6 +1,12 @@
-# jXml2jsonl
+# jXml2jsonl (archived)
 
-*Note*: this version of the code is no longer supported. I ran into some problems with JavaScript itself that made me re-think the approach and I am writing a [new implementation using Kotlin](https://github.com/alexvoss/xml2jsonl) now, which should not only be faster but also deal with larger individual records.
+> **Note**
+> this repository is now archived.
+
+This version of the code is no longer supported. I ran into limitations of the V8 JavaScript engine 
+that restrict the size of a record that can be processed and made me re-think the approach. I am writing 
+a [new implementation using Kotlin](https://github.com/alexvoss/xml2jsonl) now, which should not only 
+be faster but also deal with larger individual records.
 
 Xml2jsonl is a utility to convert large XML files into files with one JSON object per line, allowing
 the data to be filtered on the way.
